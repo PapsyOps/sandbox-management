@@ -1,0 +1,5 @@
+{
+  "terraform.languageServer.enabled": true,
+  "terraform.formatOnSave": true,
+  "editor.formatOnSave": true
+}
