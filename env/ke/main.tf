@@ -23,3 +23,19 @@ module "storage" {
   kind                = var.kind
   tags                = var.tags
 }
+
+
+module "rg" {
+  source   = "../../module/resource_group"
+  name     = "KE-RG-CH-TZ-Test"
+  location = "West Europe"
+}
+
+module "func_app" {
+  source                  = "../../module/function_app"
+  resource_group_name     = "KE-RG-EUW-IDAS-LMS"
+  location                = "West Europe"
+  storage_account_name    = "idastranslatorfiles"
+  function_app_name       = "idastranslatorfunction"
+  app_service_plan_name   = "plan-func-ke"
+}
