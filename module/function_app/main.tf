@@ -1,35 +1,33 @@
-resource "azurerm_storage_account" "sa" {
-  name                     = var.storage_account_name
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+data "azurerm_storage_account" "existing" {
+  name                = var.existing_storage_account_name
+  resource_group_name = var.existing_resource_group_name
 }
 
-resource "azurerm_app_service_plan" "plan" {
+output "storage_account_key" {
+  value     = data.azurerm_storage_account.existing.primary_access_key
+  sensitive = true
+}
+
+resource "azurerm_service_plan" "plan" {
   name                = var.app_service_plan_name
+  os_type             = var.os_type
   location            = var.location
-  resource_group_name = var.resource_group_name
-  kind                = "FunctionApp"
-  reserved            = true
-
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+  resource_group_name = var.existing_resource_group_name
+  sku_name            = var.sku_name
 }
 
-resource "azurerm_function_app" "fa" {
+resource "azurerm_linux_function_app" "fa" {
   name                       = var.function_app_name
   location                   = var.location
-  resource_group_name        = var.resource_group_name
-  app_service_plan_id        = azurerm_app_service_plan.plan.id
-  storage_account_name       = azurerm_storage_account.sa.name
-  storage_account_access_key = azurerm_storage_account.sa.primary_access_key
-  version                    = "~4"
-  os_type                    = "linux"
+  resource_group_name        = var.existing_resource_group_name
+  service_plan_id            = azurerm_service_plan.plan.id
+  storage_account_name       = data.azurerm_storage_account.existing.name
+  storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
+
 
   site_config {
-    linux_fx_version = "Python|3.10"
+    application_stack {
+      python_version = "3.10"
+    }
   }
 }
