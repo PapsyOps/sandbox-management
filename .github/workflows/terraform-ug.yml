@@ -1,0 +1,15 @@
+name: Terraform UG
+
+on:
+  push:
+    paths:
+      - "env/ug/**"
+      - ".github/workflows/terraform-ug.yml"
+
+jobs:
+  call-template:
+    uses: ./.github/workflows/terraform-template.yml
+    with:
+      env_name: "ug"
+      working_directory: "./env/ug"
+      var_file: "env/ug/dev.tfvars"
