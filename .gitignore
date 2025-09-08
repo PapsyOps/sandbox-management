@@ -10,7 +10,7 @@
 crash.log
 
 # Sensitive variable overrides
-*.tfvars
+#*.tfvars
 *.tfvars.json
 
 # IDE / editor settings
