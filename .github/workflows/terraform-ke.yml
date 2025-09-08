@@ -7,9 +7,9 @@ on:
       - ".github/workflows/terraform-ke.yml"
 
 jobs:
-  call-template:
-    uses: ./.github/workflows/terraform-template.yml
+  terraform:
+    uses: PapsyOps/sandbox-management/.github/workflows/terraform-template.yml@main
     with:
-      env_name: "ke"
-      working_directory: "./env/ke"
-      var_file: "env/ke/dev.tfvars"
+      environment: ke
+      var-file: dev.tfvars
+    secrets: inherit
