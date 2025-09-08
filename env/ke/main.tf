@@ -62,7 +62,7 @@ module "func_app" {
   account_replication_type      = var.account_replication_type
   tags = {
     "ke-app-backup" = "Yes"
-  
+
   }
 
 }
