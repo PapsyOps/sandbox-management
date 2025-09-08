@@ -3,7 +3,7 @@ name: Terraform Reusable Workflow
 on:
   workflow_call:
     inputs:
-      env_name:
+      environment:
         description: "Environment (ke, ug, tz, etc.)"
         required: true
         type: string

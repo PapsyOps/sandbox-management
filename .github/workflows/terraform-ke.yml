@@ -3,7 +3,7 @@ name: Terraform KE
 on:
   push:
     paths:
-      - "./env/ke/**"
+      - "env/ke/**"
       - ".github/workflows/terraform-ke.yml"
 
 jobs:
@@ -11,5 +11,6 @@ jobs:
     uses: PapsyOps/sandbox-management/.github/workflows/terraform-template.yml@main
     with:
       environment: ke
-      var-file: dev.tfvars
+      working_directory: ./env/ke
+      var_file: dev.tfvars
     secrets: inherit

@@ -11,5 +11,6 @@ jobs:
     uses: PapsyOps/sandbox-management/.github/workflows/terraform-template.yml@main
     with:
       environment: ug
-      var-file: dev.tfvars
+      working_directory: ./env/ug
+      var_file: dev.tfvars
     secrets: inherit
