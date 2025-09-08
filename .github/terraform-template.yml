@@ -1,0 +1,53 @@
+name: Terraform Reusable Workflow
+
+on:
+  workflow_call:
+    inputs:
+      env_name:
+        description: "Environment (ke, ug, tz, etc.)"
+        required: true
+        type: string
+      working_directory:
+        description: "Path to the environment folder"
+        required: true
+        type: string
+      var_file:
+        description: "Terraform variables file"
+        required: true
+        type: string
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: federated
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ inputs.working_directory }}
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ${{ inputs.working_directory }}
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=${{ inputs.var_file }} -out=tfplan
+        working-directory: ${{ inputs.working_directory }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
+        working-directory: ${{ inputs.working_directory }}
