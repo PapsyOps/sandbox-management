@@ -8,7 +8,7 @@ tags = {
   "ke-app-environment"      = "Development"
   "ke-app-tech-contact"     = "dampaire@kpmg.com"
   "ke-app-end-of-life-date" = "Never"
-  "ke-app-backup"           = "Yes"
+ 
 
 }
 
