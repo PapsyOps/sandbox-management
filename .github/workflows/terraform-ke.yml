@@ -1,63 +1,15 @@
-name: Terraform KE (sandbox)
+name: Terraform KE
 
 on:
   push:
     paths:
-      - 'env/ke/**'
-      - 'module/**'
-  pull_request:
-    paths:
-      - 'env/ke/**'
-      - 'module/**'
-
-permissions:
-  id-token: write
-  contents: read
+      - "./env/ke/**"
+      - ".github/workflows/terraform-ke.yml"
 
 jobs:
-  terraform:
-    runs-on: ubuntu-latest
-
-    env:
-      ARM_USE_OIDC: true
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Azure login (OIDC)
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform fmt
-        working-directory: env/ke
-        run: terraform fmt -check
-
-      - name: Terraform init
-        working-directory: env/ke
-        run: terraform init -upgrade
-
-      - name: Terraform validate
-        working-directory: env/ke
-        run: terraform validate
-
-      - name: Terraform plan
-        id: plan
-        working-directory: ./env/ke
-        run: terraform plan -var-file=dev.tfvars -out=tfplan
-
-      - name: Upload plan artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: tfplan-ke
-          path: env/ke/tfplan
-
-      - name: Terraform apply
-        if: github.ref == 'refs/heads/main'
-        working-directory: ./env/ke
-        run: terraform apply -auto-approve tfplan
+  call-template:
+    uses: ./.github/workflows/terraform-template.yml
+    with:
+      env_name: "ke"
+      working_directory: "./env/ke"
+      var_file: "env/ke/dev.tfvars"
