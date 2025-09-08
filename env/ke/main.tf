@@ -61,7 +61,7 @@ module "func_app" {
   account_tier                  = var.account_tier
   account_replication_type      = var.account_replication_type
   tags = {
-    "ke-app-backup" = "Yes"
+    "ke-app-backup" = "No"
 
   }
 
