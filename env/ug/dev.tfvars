@@ -15,7 +15,7 @@ tags = {
 }
 
 
-storage_account_name     = "ugstorageeast003"
+storage_account_name     = "ugstorageeast004"
 resource_group_name      = "UG-RG-Infra"
 account_tier             = "Standard"
 account_replication_type = "LRS"
