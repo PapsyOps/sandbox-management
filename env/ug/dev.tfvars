@@ -10,6 +10,7 @@ tags = {
   "ke-app-end-of-life-date" = "Never"
   "ke-app-backup"           = "Yes"
   "ke-patch-priroty"  = "Low"
+   "ke-patch-priroty"  = "Low"
 
 }
 
