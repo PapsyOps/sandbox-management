@@ -22,3 +22,7 @@ variable "account_replication_type" {
 variable "tags" {
   type = map(string)
 }
+# variable "subscription_id" {
+#   description = "Azure subscription ID"
+#   type        = string
+# }
