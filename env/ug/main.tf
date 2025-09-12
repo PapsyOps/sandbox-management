@@ -8,11 +8,11 @@ terraform {
   }
 }
  
-# provider "azurerm" {
-#   features {}
+provider "azurerm" {
+  features {}
 #   subscription_id = "2975b020-f54c-42da-9650-b31c9108635a"
 #   tenant_id       = "c8b38f7c-553a-4eab-aad1-2a835c934033"
-# }
+ }
 
 module "ug_rg" {
   source              = "../../module/resource_group"
